@@ -3,15 +3,25 @@
 include "../infra/conexao.php";
 
 $id = $_GET["id"];
-$sql = "SELECT * FROM animais WHERE id = $id";
-$resultado = mysqli_query($conexao, $sql );
 
-$animais =mysqli_fetch_assoc($resultado);
+$sql = "SELECT * FROM animais WHERE id = ?";
+
+$stmt = mysqli_prepare($conexao, $sql);
+
+mysqli_stmt_bind_param($stmt, "i", $id);
+
+mysqli_stmt_execute($stmt);
+
+$resultado = mysqli_stmt_get_result($stmt);
+
+$animais = mysqli_fetch_assoc($resultado);
+
+mysqli_stmt_close($stmt);
 
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -21,42 +31,80 @@ $animais =mysqli_fetch_assoc($resultado);
 </head>
 
 <body>
-    <header>
-        <h1>CRUD - AUmigos</h1>
-    </header>
-    <main>
-        <h2>Editando o animal <?php echo $animais["nome"]?>!</h2>
-        <form action="atualizar.php" method="POST">
-            <input type="hidden" name="id" value="<?php echo $animais["id"]?>">
 
-            <label for="id">Id:</label>
-            <input type="text" name="id" value="<?php echo $animais["id"]?>">
-            <br>
-            <label for="nome">Nome:</label>
-            <input type="text" name="nome" value="<?php echo $animais["nome"]?>">
-            <br>
-            <label for="especie">Especie:</label>
-            <input type="text" name="especie" value="<?php echo $animais["especie"]?>">
-            <br>
-            <label for="raca">Raça:</label>
-            <input type="text" name="raca" value="<?php echo $animais["raca"]?>">
-            <br>
-            <label for="idade">Idade:</label>
-            <input type="number" name="idade" value="<?php echo $animais["idade"]?>">
-            <br>
-            <label for="cliente_id">Cliente ID:</label>
-            <input type="number" name="cliente_id" value="<?php echo $animais["cliente_id"]?>">
-            <br>
-            
-            <button type="submit">Atualizar</button>
-        </form>
+<header>
+    <h1>CRUD - AUmigos</h1>
+</header>
 
-    </main>
-    <footer>
+<main>
 
-    </footer>
+    <h2>
+        Editando o animal <?php echo htmlspecialchars($animais["nome"]); ?>!
+    </h2>
 
+    <form action="atualizar_animal.php" method="POST">
+
+        <input 
+            type="hidden" 
+            name="id" 
+            value="<?php echo $animais["id"]; ?>"
+        >
+
+        <label for="nome">Nome:</label>
+        <input 
+            type="text" 
+            id="nome"
+            name="nome" 
+            value="<?php echo htmlspecialchars($animais["nome"]); ?>"
+        >
+
+        <br>
+
+        <label for="especie">Espécie:</label>
+        <input 
+            type="text" 
+            id="especie"
+            name="especie" 
+            value="<?php echo htmlspecialchars($animais["especie"]); ?>"
+        >
+
+        <br>
+
+        <label for="raca">Raça:</label>
+        <input 
+            type="text" 
+            id="raca"
+            name="raca" 
+            value="<?php echo htmlspecialchars($animais["raca"]); ?>"
+        >
+
+        <br>
+
+        <label for="idade">Idade:</label>
+        <input 
+            type="number" 
+            id="idade"
+            name="idade" 
+            value="<?php echo $animais["idade"]; ?>"
+        >
+
+        <br>
+
+        <label for="cliente_id">Cliente ID:</label>
+        <input 
+            type="number" 
+            id="cliente_id"
+            name="cliente_id" 
+            value="<?php echo $animais["cliente_id"]; ?>"
+        >
+
+        <br>
+
+        <button type="submit">Atualizar</button>
+
+    </form>
+
+</main>
 
 </body>
-
 </html>
