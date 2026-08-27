@@ -29,22 +29,22 @@ $animais =mysqli_fetch_assoc($resultado);
         <form action="atualizar.php" method="POST">
             <input type="hidden" name="id" value="<?php echo $animais["id"]?>">
 
-            <label for="titulo">Id:</label>
+            <label for="id">Id:</label>
             <input type="text" name="id" value="<?php echo $animais["id"]?>">
             <br>
-            <label for="autor">Nome:</label>
+            <label for="nome">Nome:</label>
             <input type="text" name="nome" value="<?php echo $animais["nome"]?>">
             <br>
-            <label for="ano">Especie:</label>
+            <label for="especie">Especie:</label>
             <input type="text" name="especie" value="<?php echo $animais["especie"]?>">
             <br>
-            <label for="ano">Raça:</label>
+            <label for="raca">Raça:</label>
             <input type="text" name="raca" value="<?php echo $animais["raca"]?>">
             <br>
-            <label for="ano">Idade:</label>
+            <label for="idade">Idade:</label>
             <input type="number" name="idade" value="<?php echo $animais["idade"]?>">
             <br>
-            <label for="ano">Especie:</label>
+            <label for="cliente_id">Cliente ID:</label>
             <input type="number" name="cliente_id" value="<?php echo $animais["cliente_id"]?>">
             <br>
             
